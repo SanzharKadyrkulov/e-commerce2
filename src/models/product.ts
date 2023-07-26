@@ -4,4 +4,5 @@ export interface IProduct {
 	price: number;
 	description: string;
 	image: string;
+	category: "t-shirt" | "shoe" | "pants";
 }

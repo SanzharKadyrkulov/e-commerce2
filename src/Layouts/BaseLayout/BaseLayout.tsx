@@ -1,17 +1,12 @@
 import React, { FC } from "react";
 import Navbar from "../../components/common/Navbar/Navbar";
-import Hero from "../../components/common/Hero/Hero";
+import { Outlet } from "react-router-dom";
 
-type BaseLayoutProps = {
-	children: React.ReactNode;
-};
-
-const BaseLayout: FC<BaseLayoutProps> = ({ children }) => {
+const BaseLayout: FC = () => {
 	return (
 		<>
 			<Navbar />
-			{/* <Hero /> */}
-			{children}
+			<Outlet />
 		</>
 	);
 };

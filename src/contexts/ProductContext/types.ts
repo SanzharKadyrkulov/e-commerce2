@@ -3,6 +3,7 @@ import { IProduct } from "../../models/product";
 export interface IProductContextType {
 	products: IProduct[];
 	product: IProduct | null;
+	getProducts: () => void;
 }
 
 export interface IInitState {
