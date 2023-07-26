@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import {
 	IProductContextType,
 	productContext,
-} from "../../contexts/ProductContext";
+} from "../../contexts/ProductContext/ProductContext";
 
 const HomePage = () => {
 	const {
