@@ -95,6 +95,14 @@
 			"price": 139.99,
 			"image": "https://example.com/nike_air_zoom_structure_23.jpg",
 			"category": "shoe"
+		},
+		{
+			"title": "kajsdhajskh",
+			"description": "sdbfjah",
+			"price": 23423,
+			"image": "aushdkjas",
+			"category": "t-shirt",
+			"id": 13
 		}
 	]
 }

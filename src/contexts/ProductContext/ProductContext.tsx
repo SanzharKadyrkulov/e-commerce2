@@ -2,7 +2,7 @@ import React, { FC, createContext, useReducer } from "react";
 import { IInitState, IProductContextType, TProductAction } from "./types";
 import { API } from "../../utils/consts";
 import axios from "axios";
-import { IProduct } from "../../models/product";
+import { IProduct, IProductCreate } from "../../models/product";
 
 export const productContext = createContext<IProductContextType | null>(null);
 
@@ -38,10 +38,31 @@ const ProductContext: FC<IProductContext> = ({ children }) => {
 		});
 	}
 
+	async function getOneProduct(id: number) {
+		const { data } = await axios.get(`${API}/${id}`);
+
+		dispatch({
+			type: "product",
+			payload: data,
+		});
+	}
+
+	async function addProduct(newProduct: IProductCreate) {
+		await axios.post(API, newProduct);
+	}
+
+	async function deleteProduct(id: number) {
+		await axios.delete(`${API}/${id}`);
+		getProducts();
+	}
+
 	const value = {
 		products: state.products,
 		product: state.product,
 		getProducts,
+		addProduct,
+		deleteProduct,
+		getOneProduct,
 	};
 	return (
 		<productContext.Provider value={value}>{children}</productContext.Provider>

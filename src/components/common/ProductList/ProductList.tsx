@@ -17,7 +17,7 @@ const ProductList = () => {
 
 	return (
 		<div>
-			<Grid container>
+			<Grid container spacing={2} justifyContent="center">
 				{products.map((item) => (
 					<ProductItem key={item.id} item={item} />
 				))}
