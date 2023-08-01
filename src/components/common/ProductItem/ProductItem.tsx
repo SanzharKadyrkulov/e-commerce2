@@ -38,7 +38,9 @@ const ProductItem: FC<IProductItemProps> = ({ item }) => {
 					<Button onClick={() => deleteProduct(item.id)} size="small">
 						Delete
 					</Button>
-					<Button size="small">Edit</Button>
+					<Button component={Link} to={`/edit/${item.id}`} size="small">
+						Edit
+					</Button>
 					<Button component={Link} to={`/details/${item.id}`} size="small">
 						Learn more
 					</Button>

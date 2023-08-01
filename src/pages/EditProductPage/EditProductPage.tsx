@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -16,37 +16,51 @@ import {
 import { productContext } from "../../contexts/ProductContext/ProductContext";
 import { IProductContextType } from "../../contexts/ProductContext/types";
 import { TCategory } from "../../models/product";
+import { useNavigate, useParams } from "react-router-dom";
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function AddProductPage() {
-	const { addProduct } = React.useContext(
+const EditProductPage = () => {
+	const { product, getOneProduct, editProduct } = useContext(
 		productContext
 	) as IProductContextType;
-	const [formValue, setFormValue] = React.useState({
+
+	const { id } = useParams();
+
+	const navigate = useNavigate();
+
+	const [formValue, setFormValue] = useState({
+		id: 1,
 		title: "",
 		description: "",
 		price: "",
 		image: "",
-		category: "t-shirt",
+		category: "",
 	});
+
+	useEffect(() => {
+		id && getOneProduct(+id);
+	}, []);
+
+	useEffect(() => {
+		if (product) {
+			setFormValue({ ...product, price: product.price.toString() });
+		}
+	}, [product]);
 
 	function handleChange(
 		e:
 			| React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 			| SelectChangeEvent<string>
 	) {
-		console.log(e);
-
 		setFormValue({
 			...formValue,
 			[e.target.name]: e.target.value,
 		});
 	}
 
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
+	function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+		e.preventDefault();
 
 		if (
 			!formValue.title.trim() ||
@@ -58,20 +72,16 @@ export default function AddProductPage() {
 			return;
 		}
 
-		addProduct({
+		console.log(formValue);
+
+		editProduct({
 			...formValue,
 			price: +formValue.price,
 			category: formValue.category as TCategory,
 		});
 
-		setFormValue({
-			title: "",
-			description: "",
-			price: "",
-			image: "",
-			category: "t-shirt",
-		});
-	};
+		navigate(-1);
+	}
 
 	return (
 		<ThemeProvider theme={defaultTheme}>
@@ -86,7 +96,7 @@ export default function AddProductPage() {
 					}}
 				>
 					<Typography component="h1" variant="h5">
-						New Product
+						Edit Product
 					</Typography>
 					<Box
 						component="form"
@@ -153,11 +163,13 @@ export default function AddProductPage() {
 							variant="contained"
 							sx={{ mt: 3, mb: 2 }}
 						>
-							Add New Product
+							Save
 						</Button>
 					</Box>
 				</Box>
 			</Container>
 		</ThemeProvider>
 	);
-}
+};
+
+export default EditProductPage;
