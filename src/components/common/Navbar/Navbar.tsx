@@ -9,7 +9,7 @@ import InputBase from "@mui/material/InputBase";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -54,6 +54,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
+	const navigate = useNavigate();
+	const location = useLocation();
+
+	console.log(location);
+
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static">
@@ -78,7 +83,12 @@ export default function Navbar() {
 					</Typography>
 
 					<Box sx={{ flexGrow: 1, display: "flex", ml: 2 }}>
-						<Button component={Link} to="/catalog" sx={{ color: "white" }}>
+						<Button
+							onClick={() =>
+								location.pathname !== "/catalog" && navigate("/catalog")
+							}
+							sx={{ color: "white" }}
+						>
 							Catalog
 						</Button>
 						<Button component={Link} to="/add" sx={{ color: "white" }}>
