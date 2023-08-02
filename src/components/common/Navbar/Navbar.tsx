@@ -51,6 +51,9 @@ export default function Navbar() {
 					</Box>
 
 					<LiveSearch />
+					<Button component={Link} to="/auth" sx={{ color: "white" }}>
+						Login
+					</Button>
 				</Toolbar>
 			</AppBar>
 		</Box>
