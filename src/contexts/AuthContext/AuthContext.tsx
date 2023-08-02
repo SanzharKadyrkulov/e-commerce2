@@ -14,6 +14,8 @@ import {
 	signOut,
 } from "firebase/auth";
 import { auth } from "../../firebase";
+import { ADMINS } from "../../utils/consts";
+import { notify } from "../../components/common/Toastify/Toastify";
 
 export const authContext = createContext<IAuthContextTypes | null>(null);
 
@@ -28,14 +30,14 @@ const AuthContext: FC<IAuthContextProps> = ({ children }) => {
 		try {
 			await createUserWithEmailAndPassword(auth, email, password);
 		} catch (e: any) {
-			console.log(e.code);
+			notify(e.code, "error");
 		}
 	}
 	async function login({ email, password }: IUserCredentials) {
 		try {
 			await signInWithEmailAndPassword(auth, email, password);
 		} catch (e: any) {
-			console.log(e.code);
+			notify(e.code, "error");
 		}
 	}
 
@@ -43,7 +45,7 @@ const AuthContext: FC<IAuthContextProps> = ({ children }) => {
 		try {
 			await signOut(auth);
 		} catch (e: any) {
-			console.log(e.code);
+			notify(e.code, "error");
 		}
 	}
 
@@ -53,11 +55,20 @@ const AuthContext: FC<IAuthContextProps> = ({ children }) => {
 		});
 	}, []);
 
+	function isAdmin() {
+		if (!user) {
+			return false;
+		}
+
+		return ADMINS.includes(user.email as string);
+	}
+
 	const value = {
 		user,
 		register,
 		login,
 		logout,
+		isAdmin,
 	};
 	return <authContext.Provider value={value}>{children}</authContext.Provider>;
 };

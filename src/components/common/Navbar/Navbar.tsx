@@ -8,10 +8,15 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Button } from "@mui/material";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import LiveSearch from "../LiveSearch/LiveSearch";
+import { authContext } from "../../../contexts/AuthContext/AuthContext";
+import { IAuthContextTypes } from "../../../contexts/AuthContext/types";
 
 export default function Navbar() {
 	const navigate = useNavigate();
 	const location = useLocation();
+	const { user, logout, isAdmin } = React.useContext(
+		authContext
+	) as IAuthContextTypes;
 
 	return (
 		<Box sx={{ flexGrow: 1 }}>
@@ -45,15 +50,27 @@ export default function Navbar() {
 						>
 							Catalog
 						</Button>
-						<Button component={Link} to="/add" sx={{ color: "white" }}>
-							Add
-						</Button>
+						{isAdmin() && (
+							<Button component={Link} to="/add" sx={{ color: "white" }}>
+								Add
+							</Button>
+						)}
 					</Box>
 
 					<LiveSearch />
-					<Button component={Link} to="/auth" sx={{ color: "white" }}>
-						Login
-					</Button>
+
+					{user ? (
+						<Box display="flex" alignItems="center" px={2} gap={1}>
+							<Typography>{user.email}</Typography>
+							<Button sx={{ color: "white" }} onClick={logout}>
+								Logout
+							</Button>
+						</Box>
+					) : (
+						<Button component={Link} to="/auth" sx={{ color: "white" }}>
+							Login
+						</Button>
+					)}
 				</Toolbar>
 			</AppBar>
 		</Box>

@@ -10,12 +10,15 @@ import Typography from "@mui/material/Typography";
 import { productContext } from "../../../contexts/ProductContext/ProductContext";
 import { IProductContextType } from "../../../contexts/ProductContext/types";
 import { Link } from "react-router-dom";
+import { authContext } from "../../../contexts/AuthContext/AuthContext";
+import { IAuthContextTypes } from "../../../contexts/AuthContext/types";
 interface IProductItemProps {
 	item: IProduct;
 }
 
 const ProductItem: FC<IProductItemProps> = ({ item }) => {
 	const { deleteProduct } = useContext(productContext) as IProductContextType;
+	const { isAdmin } = useContext(authContext) as IAuthContextTypes;
 
 	return (
 		<Grid item xs={8} md={6} lg={4}>
@@ -35,12 +38,16 @@ const ProductItem: FC<IProductItemProps> = ({ item }) => {
 					<Typography variant="h6">${item.price}</Typography>
 				</CardContent>
 				<CardActions>
-					<Button onClick={() => deleteProduct(item.id)} size="small">
-						Delete
-					</Button>
-					<Button component={Link} to={`/edit/${item.id}`} size="small">
-						Edit
-					</Button>
+					{isAdmin() && (
+						<>
+							<Button onClick={() => deleteProduct(item.id)} size="small">
+								Delete
+							</Button>
+							<Button component={Link} to={`/edit/${item.id}`} size="small">
+								Edit
+							</Button>
+						</>
+					)}
 					<Button component={Link} to={`/details/${item.id}`} size="small">
 						Learn more
 					</Button>
