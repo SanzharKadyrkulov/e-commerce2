@@ -13,7 +13,9 @@ const Pagination = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	useEffect(() => {
+		const currentParams = Object.fromEntries([...searchParams]);
 		setSearchParams({
+			...currentParams,
 			_page: page.toString(),
 			_limit: LIMIT.toString(),
 		});
