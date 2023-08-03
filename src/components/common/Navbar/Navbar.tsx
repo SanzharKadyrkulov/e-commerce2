@@ -5,6 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import MenuIcon from "@mui/icons-material/Menu";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Button } from "@mui/material";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import LiveSearch from "../LiveSearch/LiveSearch";
@@ -58,6 +59,10 @@ export default function Navbar() {
 					</Box>
 
 					<LiveSearch />
+
+					<IconButton component={Link} to="/cart">
+						<ShoppingCartIcon sx={{ color: "white" }} />
+					</IconButton>
 
 					{user ? (
 						<Box display="flex" alignItems="center" px={2} gap={1}>

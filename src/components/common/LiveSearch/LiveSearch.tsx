@@ -72,7 +72,7 @@ const LiveSearch = () => {
 	}, [searchVal]);
 
 	return (
-		<Search>
+		<Search sx={{ mx: 3 }}>
 			<SearchIconWrapper>
 				<SearchIcon />
 			</SearchIconWrapper>

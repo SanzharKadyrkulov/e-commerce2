@@ -5,14 +5,17 @@ import ProductContext from "./contexts/ProductContext/ProductContext";
 import AuthContext from "./contexts/AuthContext/AuthContext";
 import "react-toastify/dist/ReactToastify.css";
 import Toastify from "./components/common/Toastify/Toastify";
+import CartContext from "./contexts/CartContext/CartContext";
 
 function App() {
 	return (
 		<BrowserRouter>
 			<ProductContext>
 				<AuthContext>
-					<Toastify />
-					<AppRoutes />
+					<CartContext>
+						<Toastify />
+						<AppRoutes />
+					</CartContext>
 				</AuthContext>
 			</ProductContext>
 		</BrowserRouter>
