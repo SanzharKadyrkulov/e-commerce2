@@ -68,12 +68,54 @@ const CartContext: FC<ICartContextProps> = ({ children }) => {
 		return isInCart;
 	}
 
+	function increaseCount(id: number) {
+		const data = getCartFromLS();
+
+		data.products = data.products.map((item) => {
+			if (item.id === id) {
+				item.count += 1;
+				item.subPrice += item.price;
+			}
+			return item;
+		});
+
+		data.totalPrice = calcTotalPrice(data.products);
+
+		setCartToLS(data);
+		getCart();
+	}
+
+	function decreaseCount(id: number) {
+		const data = getCartFromLS();
+
+		data.products = data.products.map((item) => {
+			if (item.id === id) {
+				item.count -= 1;
+				item.subPrice -= item.price;
+			}
+			return item;
+		});
+
+		data.totalPrice = calcTotalPrice(data.products);
+
+		setCartToLS(data);
+		getCart();
+	}
+
+	function clearCart() {
+		localStorage.removeItem("cart");
+		getCart();
+	}
+
 	const value = {
 		cart,
 		getCart,
 		addProductToCart,
 		deleteProductFromCart,
 		isAlreadyInCart,
+		increaseCount,
+		decreaseCount,
+		clearCart,
 	};
 	return <cartContext.Provider value={value}>{children}</cartContext.Provider>;
 };

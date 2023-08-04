@@ -6,13 +6,16 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
 import { cartContext } from "../../contexts/CartContext/CartContext";
 import { ICartContextTypes } from "../../contexts/CartContext/types";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export default function CartPage() {
-	const { cart, getCart } = React.useContext(cartContext) as ICartContextTypes;
+	const { cart, getCart, increaseCount, decreaseCount, deleteProductFromCart } =
+		React.useContext(cartContext) as ICartContextTypes;
 
 	React.useEffect(() => {
 		getCart();
@@ -57,11 +60,42 @@ export default function CartPage() {
 							</TableCell>
 							<TableCell align="right">{item.category}</TableCell>
 							<TableCell align="right">{item.price}</TableCell>
-							<TableCell align="right">{item.subPrice}</TableCell>
+							<TableCell align="right">{item.subPrice.toFixed(2)}</TableCell>
+							<TableCell>
+								<Box display="flex" alignItems="center" gap={2}>
+									<IconButton
+										onClick={() =>
+											item.count <= 1
+												? deleteProductFromCart(item.id)
+												: decreaseCount(item.id)
+										}
+									>
+										<RemoveIcon />
+									</IconButton>
+									<Typography variant="h6">{item.count}</Typography>
+									<IconButton onClick={() => increaseCount(item.id)}>
+										<AddIcon />
+									</IconButton>
+								</Box>
+							</TableCell>
 						</TableRow>
 					))}
 				</TableBody>
 			</Table>
+
+			<Box
+				display="flex"
+				alignItems="center"
+				justifyContent="space-between"
+				padding="0 40px"
+			>
+				<Typography variant="h4">
+					Total price: ${cart.totalPrice.toFixed(2)}{" "}
+				</Typography>
+				<Button component={Link} to="/success" variant="contained">
+					Order
+				</Button>
+			</Box>
 		</TableContainer>
 	);
 }

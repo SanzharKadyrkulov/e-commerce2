@@ -8,6 +8,7 @@ import DetailsPage from "../pages/DetailsPage/DetailsPage";
 import EditProductPage from "../pages/EditProductPage/EditProductPage";
 import AuthPage from "../pages/AuthPage/AuthPage";
 import CartPage from "../pages/CartPage/CartPage";
+import SuccessPage from "../pages/SuccessPage/SuccessPage";
 
 const AppRoutes = () => {
 	return (
@@ -22,6 +23,7 @@ const AppRoutes = () => {
 			</Route>
 
 			<Route path="/auth" element={<AuthPage />} />
+			<Route path="/success" element={<SuccessPage />} />
 		</Routes>
 	);
 };

@@ -12,4 +12,7 @@ export interface ICartContextTypes {
 	addProductToCart: (product: IProduct) => void;
 	deleteProductFromCart: (id: number) => void;
 	isAlreadyInCart: (id: number) => boolean;
+	increaseCount: (id: number) => void;
+	decreaseCount: (id: number) => void;
+	clearCart: () => void;
 }
